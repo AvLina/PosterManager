@@ -1,17 +1,16 @@
 package ru.netology.manager;
 
 import ru.netology.domain.Film;
+import ru.netology.repository.FilmRepository;
 
 public class FilmManager {
 
     private  Film[] films = new Film[0];
-    private int limitShowFilms = 10;
+    private int counterFilms;
+    private FilmRepository repository;
 
     public FilmManager() {
-    }
-
-    public FilmManager(int limitShowFilms) {
-        this.limitShowFilms = limitShowFilms;
+        this.counterFilms = 10;
     }
 
     public Film[] getFilms() {
@@ -22,15 +21,15 @@ public class FilmManager {
         this.films = films;
     }
 
-    public int getLimitShowFilms() {
-        return limitShowFilms;
+    public int getCounterFilms() {
+        return counterFilms;
     }
 
-    public void setLimitShowFilms(int limitShowFilms) {
-        this.limitShowFilms = limitShowFilms;
+    public void setCounterFilms(int counterFilms) {
+        this.counterFilms = counterFilms;
     }
 
-     public void addingNewFilm (Film newFilm) {
+     public void save (Film newFilm) {
          int length = films.length + 1;
          Film[] tmp = new Film[length];
          System.arraycopy(films, 0, tmp, 0, films.length);
@@ -41,9 +40,10 @@ public class FilmManager {
      }
 
     public Film[] getLastFilm() {
+        Film[] films = repository.findAll();
         int resultLength;
-        if (films.length > limitShowFilms) {
-            resultLength = limitShowFilms;
+        if (films.length >= counterFilms) {
+            resultLength = counterFilms;
         } else {
             resultLength = films.length;
         }
@@ -53,10 +53,5 @@ public class FilmManager {
             result[i] = films[index];
         }
         return result;
-
-
-    }
-
-    public void save(Film film) {
     }
 }

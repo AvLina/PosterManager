@@ -3,141 +3,106 @@ package ru.netology;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Film;
 import ru.netology.manager.FilmManager;
+import ru.netology.repository.FilmRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FilmManagerTest {
 
-
-        @Test
-        public void addTest() {
-
-            FilmManager manager = new FilmManager();
-
-            Film one = new Film(1, "Мальчишник в Вегасе", "url1", "comedy");
-            Film two = new Film(2, "Дюна", "url2", "fantasy");
-            Film three = new Film(3, "Сумерки", "url3", "fantasy");
-            Film four = new Film(4, "Отряд самоубийц", "url4", "thriller");
-            Film five = new Film(5, "Черный лебедь", "url5", "drama");
-            Film six = new Film(6, "Зеленая миля", "url6", "drama");
-            Film seven = new Film(7, "Иван Васильевич меняет профессию", "url7", "comedy");
-            Film eight = new Film(8, "Криминальное чтиво", "url8", "drama");
-            Film nine = new Film(9, "Джентельмены", "url9", "comedy");
-            Film ten = new Film(10, "Брат", "url10", "drama");
-            Film eleven = new Film(11, "Один дома", "url", "comedy");
+    Film film1 = new Film(1, "Мальчишник в Вегасе", "url1", "comedy");
+    Film film2 = new Film(2, "Дюна", "url2", "fantasy");
+    Film film3 = new Film(3, "Сумерки", "url3", "fantasy");
+    Film film4 = new Film(4, "Отряд самоубийц", "url4", "thriller");
+    Film film5 = new Film(5, "Черный лебедь", "url5", "drama");
+    Film film6 = new Film(6, "Зеленая миля", "url6", "drama");
+    Film film7 = new Film(7, "Иван Васильевич меняет профессию", "url7", "comedy");
+    Film film8 = new Film(8, "Криминальное чтиво", "url8", "drama");
+    Film film9 = new Film(9, "Джентельмены", "url9", "comedy");
+    Film film10 = new Film(10, "Брат", "url10", "drama");
+    Film film11 = new Film(11, "Один дома", "url", "comedy");
 
 
-            manager.save(one);
-            manager.save(two);
-            manager.save(three);
-            manager.save(four);
-            manager.save(five);
-            manager.save(six);
-            manager.save(seven);
-            manager.save(eight);
-            manager.save(nine);
-            manager.save(ten);
-            manager.save(eleven);
+    @Test
+    public void all() {
 
-            Film[] expected = {one, two, three, four, five, six, seven, eight, nine, ten, eleven};
-            Film[] actual = manager.getFilms();
+        FilmRepository repository = new FilmRepository();
 
-            assertArrayEquals(expected, actual);
+        repository.save(film1);
+        repository.save(film2);
+        repository.save(film3);
+        repository.save(film4);
+        repository.save(film5);
+        repository.save(film6);
+        repository.save(film7);
+        repository.save(film8);
+        repository.save(film9);
+        repository.save(film10);
+        repository.save(film11);
 
-        }
+        FilmManager manager = new FilmManager();
 
-        @Test
-        public void getLastFilmIfMoreThanTen() {
-            FilmManager manager = new FilmManager();
-            Film eleven = new Film(11, "Один дома", "url", "comedy");
-            Film ten = new Film(10, "Брат", "url10", "drama");
-            Film nine = new Film(9, "Джентельмены", "url9", "comedy");
-            Film eight = new Film(8, "Криминальное чтиво", "url8", "drama");
-            Film seven = new Film(7, "Иван Васильевич меняет профессию", "url7", "comedy");
-            Film six = new Film(6, "Зеленая миля", "url6", "drama");
-            Film five = new Film(5, "Черный лебедь", "url5", "drama");
-            Film four = new Film(4, "Отряд самоубийц", "url4", "thriller");
-            Film three = new Film(3, "Сумерки", "url3", "fantasy");
-            Film two = new Film(2, "Дюна", "url2", "fantasy");
-            Film one = new Film(1, "Мальчишник в Вегасе", "url1", "comedy");
+        Film[] expected = {film1, film2, film3, film4, film5, film6, film7, film8, film9, film10, film11};
+        Film[] actual = repository.findAll();
 
-            manager.save(eleven);
-            manager.save(ten);
-            manager.save(nine);
-            manager.save(eight);
-            manager.save(seven);
-            manager.save(six);
-            manager.save(five);
-            manager.save(four);
-            manager.save(three);
-            manager.save(two);
-            manager.save(one);
-
-            Film[] expected = {one, two, three, four, five, six, seven, eight, nine, ten};
-            Film[] actual = manager.getLastFilm();
-
-            assertArrayEquals(expected, actual);
-
-        }
-
-        @Test
-        public void getLastFilmIfLessThanTen() {
-            FilmManager manager = new FilmManager();
-
-            Film six = new Film(6, "Зеленая миля", "url6", "drama");
-            Film five = new Film(9, "Джентельмены", "url9", "comedy");
-            Film four = new Film(10, "Брат", "url10", "drama");
-            Film three = new Film(5, "Черный лебедь", "url5", "drama");
-            Film two = new Film(1, "Мальчишник в Вегасе", "url1", "comedy");
-            Film one = new Film(4, "Отряд самоубийц", "url4", "thriller");
-
-            manager.save(six);
-            manager.save(five);
-            manager.save(four);
-            manager.save(three);
-            manager.save(two);
-            manager.save(one);
-
-            Film[] expected = {one, two, three, four, five, six};
-            Film[] actual = manager.getLastFilm();
-
-            assertArrayEquals(expected, actual);
-
-        }
-
-        @Test
-        public void getLastFilmRandomAmount() {
-            FilmManager manager = new FilmManager(8);
-            Film eleven = new Film(6, "Зеленая миля", "url6", "drama");
-            Film ten = new Film(7, "Иван Васильевич меняет профессию", "url7", "comedy");
-            Film nine = new Film(11, "Один дома", "url", "comedy");
-            Film eight = new Film(3, "Сумерки", "url3", "fantasy");
-            Film seven = new Film(2, "Дюна", "url2", "fantasy");
-            Film six = new Film(10, "Брат", "url10", "drama");
-            Film five = new Film(9, "Джентельмены", "url9", "comedy");
-            Film four = new Film(1, "Мальчишник в Вегасе", "url1", "comedy");
-            Film three = new Film(5, "Черный лебедь", "url5", "drama");
-            Film two = new Film(4, "Отряд самоубийц", "url4", "thriller");
-            Film one = new Film(8, "Криминальное чтиво", "url8", "drama");
-
-            manager.save(eleven);
-            manager.save(ten);
-            manager.save(nine);
-            manager.save(eight);
-            manager.save(seven);
-            manager.save(six);
-            manager.save(five);
-            manager.save(four);
-            manager.save(three);
-            manager.save(two);
-            manager.save(one);
-
-            Film[] expected = {one, two, three, four, five, six, seven, eight};
-            Film[] actual = manager.getLastFilm();
-
-            assertArrayEquals(expected, actual);
-
-        }
-
-
+        assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void getLastFilmMoreTen() {
+
+        FilmManager manager = new FilmManager();
+        manager.save(film11);
+        manager.save(film10);
+        manager.save(film9);
+        manager.save(film8);
+        manager.save(film7);
+        manager.save(film6);
+        manager.save(film5);
+        manager.save(film4);
+        manager.save(film3);
+        manager.save(film2);
+        manager.save(film1);
+
+        Film[] expected = {film1, film2, film3, film4, film5, film6, film7, film8, film9,film10};
+        Film[] actual = manager.getLastFilm();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void getLastFilmTen() {
+
+        FilmManager manager = new FilmManager();
+        manager.save(film10);
+        manager.save(film9);
+        manager.save(film8);
+        manager.save(film7);
+        manager.save(film6);
+        manager.save(film5);
+        manager.save(film4);
+        manager.save(film3);
+        manager.save(film2);
+        manager.save(film1);
+
+        Film[] expected = {film1, film2, film3, film4, film5, film6, film7, film8, film9,film10};
+        Film[] actual = manager.getLastFilm();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldRemoveMovieById() {
+
+        FilmRepository repository = new FilmRepository();
+        repository.save(film1);
+        repository.save(film2);
+        repository.save(film3);
+
+
+        Film[] expected = {film1, film3};
+        repository.removeById(2);
+        Film[] actual = repository.findAll();
+        assertArrayEquals(actual, expected);
+    }
+
+}
