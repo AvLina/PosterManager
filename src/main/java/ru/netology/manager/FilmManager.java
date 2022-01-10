@@ -1,13 +1,12 @@
 package ru.netology.manager;
 
 import ru.netology.domain.Film;
-import ru.netology.repository.FilmRepository;
+
 
 public class FilmManager {
 
     private  Film[] films = new Film[0];
     private int counterFilms;
-    private FilmRepository repository;
 
     public FilmManager() {
         this.counterFilms = 10;
@@ -40,7 +39,6 @@ public class FilmManager {
      }
 
     public Film[] getLastFilm() {
-        Film[] films = repository.findAll();
         int resultLength;
         if (films.length >= counterFilms) {
             resultLength = counterFilms;
