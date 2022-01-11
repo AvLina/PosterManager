@@ -91,6 +91,23 @@ class FilmManagerTest {
     }
 
     @Test
+    public void getLastFilmLessTen() {
+
+        FilmManager manager = new FilmManager();
+        manager.save(film6);
+        manager.save(film5);
+        manager.save(film4);
+        manager.save(film3);
+        manager.save(film2);
+        manager.save(film1);
+
+        Film[] expected = {film1, film2, film3, film4, film5, film6};
+        Film[] actual = manager.getLastFilm();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
     void shouldRemoveMovieById() {
 
         FilmRepository repository = new FilmRepository();
