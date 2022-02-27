@@ -9,23 +9,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FilmManagerTest {
 
-    Film film1 = new Film(1, "Мальчишник в Вегасе", "url1", "comedy");
-    Film film2 = new Film(2, "Дюна", "url2", "fantasy");
-    Film film3 = new Film(3, "Сумерки", "url3", "fantasy");
-    Film film4 = new Film(4, "Отряд самоубийц", "url4", "thriller");
-    Film film5 = new Film(5, "Черный лебедь", "url5", "drama");
-    Film film6 = new Film(6, "Зеленая миля", "url6", "drama");
-    Film film7 = new Film(7, "Иван Васильевич меняет профессию", "url7", "comedy");
-    Film film8 = new Film(8, "Криминальное чтиво", "url8", "drama");
-    Film film9 = new Film(9, "Джентельмены", "url9", "comedy");
-    Film film10 = new Film(10, "Брат", "url10", "drama");
-    Film film11 = new Film(11, "Один дома", "url", "comedy");
+    private final FilmRepository repository = new FilmRepository();
+    private final  FilmManager manager;
 
+    private final Film film1 = new Film(1, "Мальчишник в Вегасе", "url1", "comedy");
+    private final Film film2 = new Film(2, "Дюна", "url2", "fantasy");
+    private final Film film3 = new Film(3, "Сумерки", "url3", "fantasy");
+    private final Film film4 = new Film(4, "Отряд самоубийц", "url4", "thriller");
+    private final Film film5 = new Film(5, "Черный лебедь", "url5", "drama");
+    private final Film film6 = new Film(6, "Зеленая миля", "url6", "drama");
+    private final Film film7 = new Film(7, "Иван Васильевич меняет профессию", "url7", "comedy");
+    private final Film film8 = new Film(8, "Криминальное чтиво", "url8", "drama");
+    private final Film film9 = new Film(9, "Джентельмены", "url9", "comedy");
+    private final Film film10 = new Film(10, "Брат", "url10", "drama");
+    private final Film film11 = new Film(11, "Один дома", "url", "comedy");
+
+    FilmManagerTest() {
+        manager = new FilmManager();
+    }
 
     @Test
     public void all() {
-
-        FilmRepository repository = new FilmRepository();
 
         repository.save(film1);
         repository.save(film2);
@@ -39,8 +43,6 @@ class FilmManagerTest {
         repository.save(film10);
         repository.save(film11);
 
-        FilmManager manager = new FilmManager();
-
         Film[] expected = {film1, film2, film3, film4, film5, film6, film7, film8, film9, film10, film11};
         Film[] actual = repository.findAll();
 
@@ -50,7 +52,6 @@ class FilmManagerTest {
     @Test
     public void getLastFilmMoreTen() {
 
-        FilmManager manager = new FilmManager();
         manager.save(film11);
         manager.save(film10);
         manager.save(film9);
@@ -72,7 +73,6 @@ class FilmManagerTest {
     @Test
     public void getLastFilmTen() {
 
-        FilmManager manager = new FilmManager();
         manager.save(film10);
         manager.save(film9);
         manager.save(film8);
@@ -93,7 +93,6 @@ class FilmManagerTest {
     @Test
     public void getLastFilmLessTen() {
 
-        FilmManager manager = new FilmManager();
         manager.save(film6);
         manager.save(film5);
         manager.save(film4);
@@ -110,7 +109,6 @@ class FilmManagerTest {
     @Test
     void shouldRemoveMovieById() {
 
-        FilmRepository repository = new FilmRepository();
         repository.save(film1);
         repository.save(film2);
         repository.save(film3);

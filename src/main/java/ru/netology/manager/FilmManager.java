@@ -1,16 +1,14 @@
 package ru.netology.manager;
 
 import ru.netology.domain.Film;
+import ru.netology.repository.FilmRepository;
 
 
 public class FilmManager {
 
     private  Film[] films = new Film[0];
-    private int counterFilms;
-
-    public FilmManager() {
-        this.counterFilms = 10;
-    }
+    private int amountFilms = 10;
+    private FilmRepository repository;
 
     public Film[] getFilms() {
         return films;
@@ -20,28 +18,34 @@ public class FilmManager {
         this.films = films;
     }
 
-    public int getCounterFilms() {
-        return counterFilms;
+    public int getAmountFilms() {
+        return amountFilms;
     }
 
-    public void setCounterFilms(int counterFilms) {
-        this.counterFilms = counterFilms;
+    public void setAmountFilms(int amountFilms) {
+        this.amountFilms = amountFilms;
     }
 
-     public void save (Film newFilm) {
+    public FilmManager() {
+    }
+
+    public FilmManager(int amountFilms) {
+        this.amountFilms = amountFilms;
+    }
+
+    public void save (Film newFilm) {
          int length = films.length + 1;
          Film[] tmp = new Film[length];
          System.arraycopy(films, 0, tmp, 0, films.length);
          int lastIndex = tmp.length - 1;
          tmp[lastIndex] = newFilm;
          films = tmp;
-
      }
 
     public Film[] getLastFilm() {
         int resultLength;
-        if (films.length >= counterFilms) {
-            resultLength = counterFilms;
+        if (films.length >= amountFilms) {
+            resultLength = amountFilms;
         } else {
             resultLength = films.length;
         }
